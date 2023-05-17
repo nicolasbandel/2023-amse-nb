@@ -1,4 +1,5 @@
 import pandas as pd
+import time
 
 downloadFiles = True
 
@@ -9,54 +10,85 @@ usecolsShock = ["latitude", "longitude", "speed", "shock_duration", "x_axis", "y
 #BST8;BST_NAME;LAND;LAT;LON
 usecolsLocation = ["BST_NAME", "LAND", "LAT", "LON"]
 
+def readShock():
+    return pd.read_csv('https://mobilithek.info/mdp-api/files/aux/573487566471229440/ShockData.csv', sep=',', storage_options=storage_options, usecols=usecolsShock)
+
+def readShockLocal():
+    return pd.read_csv('C:/Users/nicol/Downloads/ShockData.csv', sep=',', usecols=usecolsShock)
+
+def readLocation():
+    return pd.read_csv('https://download-data.deutschebahn.com/static/datasets/betriebsstellen_cargo/GEO_Bahnstellen_EXPORT.csv', sep=';', usecols=usecolsLocation)
+
+def readLoactionLocal():
+    return pd.read_csv('C:/Users/nicol/Downloads/GEO_Bahnstellen_EXPORT (2).csv', sep=';', usecols=usecolsLocation)
+
+def attemptRead(numTrys, readfct):
+    for x in range(0, numTrys):
+        try:
+            return readfct()      
+        except:
+            sleepTime = 5 + x * 30
+            print("ERROR: Loading failed " , (x+1) , "/" , numTrys)
+            if(x+1 == numTrys):
+                print("Unable to load data")
+                return None
+            else:
+                print("Wait " , sleepTime , "s")
+                time.sleep(sleepTime)
+
 print("Shocks: STARTED")
 
 #read the csv file:
 #either download the file or read the local file
 if(downloadFiles):
-    df = pd.read_csv('https://mobilithek.info/mdp-api/files/aux/573487566471229440/ShockData.csv', sep=',', storage_options=storage_options, usecols=usecolsShock)
+    df = attemptRead(3, readShock)
+            
 else:
-    df = pd.read_csv('C:/Users/nicol/Downloads/ShockData.csv', sep=',', usecols=usecolsShock)
+    df = attemptRead(3, readShockLocal)
 
-#rename all needed columns:
-df.columns.values[0] = 'lat'
-df.columns.values[1] = 'lon'
-df.columns.values[2] = 'speed'
+if(df is not None):
+    #rename all needed columns:
+    df.columns.values[0] = 'lat'
+    df.columns.values[1] = 'lon'
+    df.columns.values[2] = 'speed'
 
-#filter by criteria:
-#1: At least one value of x, y or z needs to be above 5 or below -5
-#2. All locations need a latitude and a longitude value
-df = df[(abs(df['x_axis']) > 5.0) | (abs(df['y_axis']) > 5.0 ) | (abs(df['z_axis']) > 5.0)]
-df = df.loc[df['lat'].notnull()]
-df = df.loc[df['lon'].notnull()]
+    #filter by criteria:
+    #1: At least one value of x, y or z needs to be above 5 or below -5
+    #2. All locations need a latitude and a longitude value
+    df = df[(abs(df['x_axis']) > 5.0) | (abs(df['y_axis']) > 5.0 ) | (abs(df['z_axis']) > 5.0)]
+    df = df.loc[df['lat'].notnull()]
+    df = df.loc[df['lon'].notnull()]
 
-#save table to sqlite file
-df.to_sql('shockData', 'sqlite:///2023-amse-nb/data/shockData.sqlite', if_exists='replace', index=False)
+    #save table to sqlite file
+    df.to_sql('shockData', 'sqlite:///2023-amse-nb/data/shockData.sqlite', if_exists='replace', index=False)
 
-print("Shocks: DONE")
+    print("Shocks: DONE")
+    
+downloadFailed = False
 print("Locations: STARTED")
 
 #read the csv file:
 #either download the file or read the local file
 if(downloadFiles):
-    df = pd.read_csv('https://download-data.deutschebahn.com/static/datasets/betriebsstellen_cargo/GEO_Bahnstellen_EXPORT.csv', sep=';', usecols=usecolsLocation)
+    df = attemptRead(3, readLocation)
 else:
-    df = pd.read_csv('C:/Users/nicol/Downloads/GEO_Bahnstellen_EXPORT (2).csv', sep=';', usecols=usecolsLocation)
+    df = attemptRead(3, readLoactionLocal)
 
-#rename all needed columns:
-df.columns.values[0] = 'name'
-df.columns.values[1] = 'country'
-df.columns.values[2] = 'lat'
-df.columns.values[3] = 'lon'
+if(df is not None):
+    #rename all needed columns:
+    df.columns.values[0] = 'name'
+    df.columns.values[1] = 'country'
+    df.columns.values[2] = 'lat'
+    df.columns.values[3] = 'lon'
 
-#filter by criteria:
-#1. All locations are in germany
-#2. All locations need a latitude and a longitude value
-df = df.loc[df['country']=="DEUTSCHLAND"]
-df = df.loc[df['lat'].notnull()]
-df = df.loc[df['lon'].notnull()]
+    #filter by criteria:
+    #1. All locations are in germany
+    #2. All locations need a latitude and a longitude value
+    df = df.loc[df['country']=="DEUTSCHLAND"]
+    df = df.loc[df['lat'].notnull()]
+    df = df.loc[df['lon'].notnull()]
 
-#save table to sqlite file
-df.to_sql('location', 'sqlite:///2023-amse-nb/data/locationData.sqlite', if_exists='replace', index=False)
+    #save table to sqlite file
+    df.to_sql('location', 'sqlite:///2023-amse-nb/data/locationData.sqlite', if_exists='replace', index=False)
 
-print("Locations: DONE")
+    print("Locations: DONE")
