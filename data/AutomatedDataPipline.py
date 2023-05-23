@@ -1,7 +1,7 @@
 import pandas as pd
 import time
 
-downloadFiles = True
+downloadFiles = False
 
 storage_options = {'User-Agent': 'Mozilla/5.0'}
 
@@ -41,8 +41,7 @@ print("Shocks: STARTED")
 #read the csv file:
 #either download the file or read the local file
 if(downloadFiles):
-    df = attemptRead(3, readShock)
-            
+    df = attemptRead(3, readShock)     
 else:
     df = attemptRead(3, readShockLocal)
 
@@ -60,7 +59,7 @@ if(df is not None):
     df = df.loc[df['lon'].notnull()]
 
     #save table to sqlite file
-    df.to_sql('shockData', 'sqlite:///2023-amse-nb/data/shockData.sqlite', if_exists='replace', index=False)
+    df.to_sql('shockData', 'sqlite:///data/shockData.sqlite', if_exists='replace', index=False)
 
     print("Shocks: DONE")
     
@@ -89,6 +88,6 @@ if(df is not None):
     df = df.loc[df['lon'].notnull()]
 
     #save table to sqlite file
-    df.to_sql('location', 'sqlite:///2023-amse-nb/data/locationData.sqlite', if_exists='replace', index=False)
+    df.to_sql('location', 'sqlite:///data/locationData.sqlite', if_exists='replace', index=False)
 
     print("Locations: DONE")
