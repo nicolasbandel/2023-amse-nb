@@ -19,5 +19,4 @@ columnTypes = {'column_1': Integer,
        'geo_punkt': String #gibt es tupel?
        }
 
-#df.to_sql('airports', 'sqlite:///exercises/airports.sqlite', if_exists='replace', index=False, dtype=columnTypes)
 df.to_sql('airports', 'sqlite:///airports.sqlite', if_exists='replace', index=False, dtype=columnTypes)
