@@ -32,7 +32,7 @@ pipeline TrainsstopPipeline{
     block TrainsstopCSVInterpreter oftype CSVInterpreter {enclosing: '"'; delimiter: ";";}
 
     block DropColumn oftype ColumnDeleter{
-        delete: [column F];
+        delete: [column J];
     }
 
     block TrainsstopTableInterpreter oftype TableInterpreter{
