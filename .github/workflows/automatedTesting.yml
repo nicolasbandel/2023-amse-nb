@@ -1,4 +1,4 @@
-name: Exercise Feedback
+name: My Testing
 
 on:
   push:
@@ -28,4 +28,4 @@ jobs:
     # Run exercise feedback
     - name: Exercise feedback
       run: |
-        ls
+        find . -name "tests.py"
