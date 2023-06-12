@@ -58,6 +58,7 @@ def automatedDataPipline():
 
     #read the csv file:
     #either download the file or read the local file
+    print("--------------------------------------Download--------------------------------------")
     if(downloadFiles):
         df = attemptRead(3, readShock)     
     else:
@@ -83,6 +84,7 @@ def automatedDataPipline():
         
     downloadFailed = False
     print("Locations: STARTED")
+    print("--------------------------------------Download--------------------------------------")
 
     #read the csv file:
     #either download the file or read the local file
@@ -109,6 +111,7 @@ def automatedDataPipline():
         df.to_sql('location', 'sqlite:///data/locationData.sqlite', if_exists='replace', index=False, dtype=columnTypesLocation)
 
         print("Locations: DONE")
+        print("--------------------------------------Done--------------------------------------")
         
 def main():
     automatedDataPipline()
