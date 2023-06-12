@@ -25,6 +25,11 @@ jobs:
       with:
         python-version: 3.11
 
+    - name: Istall stuff
+      run: |
+        %pip install pandas
+        %pip install 'SQLAlchemy==1.4.46'
+
     # Run exercise feedback
     - name: Exercise feedback
       run: |
