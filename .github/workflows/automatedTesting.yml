@@ -27,6 +27,7 @@ jobs:
 
     - name: Istall stuff
       run: |
+        set -m
         %pip install pandas
         %pip install 'SQLAlchemy==1.4.46'
 
