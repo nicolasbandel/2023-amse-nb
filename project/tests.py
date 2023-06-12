@@ -53,13 +53,9 @@ def testResults():
     testDB(filePathShock, "shockData", ["lat", "lon", "speed", "shock_duration", "x_axis", "y_axis", "z_axis"])
 
 def main():
-    print("--------------------------------------Delete File 1--------------------------------------")
     deleteFile(filePathLocation)
-    print("--------------------------------------Delete File 2--------------------------------------")
     deleteFile(filePathShock)
-    print("--------------------------------------Run Pipeline--------------------------------------")
     runAutomatedDataPipeline()
-    print("--------------------------------------Test stuff--------------------------------------")
     testResults()
     
     
