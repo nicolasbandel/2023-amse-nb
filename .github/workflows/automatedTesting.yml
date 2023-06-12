@@ -25,11 +25,21 @@ jobs:
       with:
         python-version: 3.11
 
-    - name: Istall stuff
-      run: |
-        set -m
-        %pip install pandas
-        %pip install 'SQLAlchemy==1.4.46'
+    - name: Install Python dependencies
+      uses: py-actions/py-dependencies-install@v4
+
+    - name: Install Python dependencies
+      uses: py-actions/py-dependency-install@v4
+      with:
+        path: "./main/project/requirements.txt"
+
+    # this Action should follow steps to set up Python build environment
+    - name: Install Python dependencies
+      uses: py-actions/py-dependency-install@v4
+      with:
+        update-pip: "false"
+        update-setuptools: "false"
+        update-wheel: "false"
 
     # Run exercise feedback
     - name: Exercise feedback
