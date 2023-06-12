@@ -1,3 +1,3 @@
 #echo "running test.py"
-python tests.py
+python ./main/project/tests.py
 find ./ -type f 
