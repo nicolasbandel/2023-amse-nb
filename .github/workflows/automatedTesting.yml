@@ -28,4 +28,4 @@ jobs:
     # Run exercise feedback
     - name: Exercise feedback
       run: |
-        ./main/project/tests.sh
+        python ./main/project/tests.py
