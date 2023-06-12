@@ -33,14 +33,6 @@ jobs:
       with:
         path: "./main/project/requirements.txt"
 
-    # this Action should follow steps to set up Python build environment
-    - name: Install Python dependencies
-      uses: py-actions/py-dependency-install@v4
-      with:
-        update-pip: "false"
-        update-setuptools: "false"
-        update-wheel: "false"
-
     # Run exercise feedback
     - name: Exercise feedback
       run: |
