@@ -25,6 +25,12 @@ jobs:
       with:
         python-version: 3.11
 
+       # Run exercise feedback
+    - name: Install dependencies
+      run: |
+        echo "loading requirements"
+        pip install -r ./main/project/requirements.txt 
+
     # Run exercise feedback
     - name: Exercise feedback
       run: |
