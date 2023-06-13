@@ -1,4 +1,4 @@
-name: My Testing
+name: Automated Dataset Testing
 
 on:
   push:

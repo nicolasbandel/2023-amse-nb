@@ -1,3 +1,2 @@
 #ignore the two sqlite files
-locationData.sqlite
-shockData.sqlite
+*.sqlite
