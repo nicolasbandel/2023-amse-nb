@@ -35,4 +35,5 @@ jobs:
     - name: Exercise feedback
       run: |
         chmod u+r+x ./main/project/test.sh
-        ./main/project/test.sh
+        cd ./main/project
+        ./test.sh
