@@ -41,6 +41,18 @@ columnTypes = {
     'name': str
     }
 
+columnTypesOut = {'date': String, 
+    'CIN': String, #TODO make custom string with exactly 5 number characters
+    'name': String,
+    'petrol': Integer, #TODO make > 0
+    'diesel': Integer, #TODO make > 0,
+    'gas': Integer, #TODO make > 0,
+    'electro': Integer, #TODO make > 0
+    'hybrid': Integer, #TODO make > 0
+    'plugInHybrid': Integer, #TODO make > 0
+    'others': Integer, #TODO make > 0
+    }
+
 def main():
     #read and drop first 6 rows
     df = pd.read_csv("https://www-genesis.destatis.de/genesis/downloads/00/tables/46251-0021_00.csv", 
@@ -77,7 +89,7 @@ def main():
     
     df.dropna()
     
-    df.to_sql('cars', 'sqlite:///./cars.sqlite', if_exists='replace', index=False)
+    df.to_sql('cars', 'sqlite:///./cars.sqlite', if_exists='replace', index=False, dtype=columnTypesOut)
     
 if __name__ == "__main__":
     main()
