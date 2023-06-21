@@ -48,7 +48,7 @@ def main():
     #delete last 4 rows
     df.drop(df.tail(4).index,inplace=True)
 
-    df = df[df['CIN'].str.match('^\d{5}$')]
+    #df = df[df['CIN'].str.match('^\d{5}$')]
     
     #print(str(df['CIN']))
     
