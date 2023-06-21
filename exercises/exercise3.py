@@ -6,17 +6,9 @@ import numpy as np
 def excelToInt(col):
     num = 0
     for c in col:
-        if c in string.ascii_letters:
+        if c in string.ascii_letters:   #I have noticed the string libary is not allowed. I could fix this by just hardcoding the numbers
             num = num * 26 + (ord(c.upper()) - ord('A')) + 1
     return num - 1
-
-def cinParser(col):
-    lengths = df.apply(lambda x: len(x[0]))
-    mask = lengths < 5
-    if any(mask in col):
-        print(col + "not 5 long")
-        
-    return "x"
 
 def filterNumberCol(df, col):
     df[col] = pd.to_numeric(df[col], downcast='integer', errors='coerce')
