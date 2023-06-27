@@ -1,2 +1,2 @@
 echo "running test.py"
-python ./tests.py
+python ../project/tests.py
