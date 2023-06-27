@@ -3,8 +3,8 @@ import sqlite3
 import urllib.request
 import os
 
-filePathLocation = "./locationData.sqlite"
-filePathShock = "./shockData.sqlite"
+filePathLocation = "./data/locationData.sqlite"
+filePathShock = "./data/shockData.sqlite"
 filePathAutomatedDataPipeline = "./AutomatedDataPipeline.py"
 
 def deleteFile(path):

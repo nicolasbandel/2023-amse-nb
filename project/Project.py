@@ -9,8 +9,11 @@ def runPythonSkript(path):
     os.system(command)
 
 def main():
+    print("AutomatedDataPipeline")
     runPythonSkript(automatedDataPipelinePath)
+    print("DataFilter")
     runPythonSkript(dataFilterPath)
+    print("DataProcessor")
     runPythonSkript(dataProcessorPath)
 
 if __name__ == "__main__":

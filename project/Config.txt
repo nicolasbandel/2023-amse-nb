@@ -1,0 +1,6 @@
+[Geo Data]
+lonStart = 6
+lonEnd = 15
+latStart = 47
+latEnd = 56
+numGeoSteps = 10
