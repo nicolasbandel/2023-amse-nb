@@ -2,7 +2,7 @@ import pandas as pd
 import time
 from sqlalchemy.types import Integer, String, Float
 
-downloadFiles = False
+downloadFiles = True
 
 storage_options = {'User-Agent': 'Mozilla/5.0'}
 
