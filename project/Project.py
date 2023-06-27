@@ -1,8 +1,8 @@
 import os
 
-automatedDataPipelinePath = "./AutomatedDataPipeline.py"
-dataFilterPath = "./DataFilter.py"
-dataProcessorPath = "./DataProcessor.py"
+automatedDataPipelinePath = "./project/AutomatedDataPipeline.py"
+dataFilterPath = "./project/DataFilter.py"
+dataProcessorPath = "./project/DataProcessor.py"
 
 def runPythonSkript(path):
     command = "python " + os.path.abspath(path)

@@ -10,14 +10,14 @@ ALL_DATA = 0
 STANDING_DATA = 1
 MOVING_DATA = 2
 
-shock_url = "./data/shockDataSplitted.sqlite"
-location_url = "./data/locationDataSplitted.sqlite"
-result_url = "./data/processedData.sqlite"
+shock_url = "./project/data/shockDataSplitted.sqlite"
+location_url = "./project/data/locationDataSplitted.sqlite"
+result_url = "../data.sqlite"
 radius = 1
 
 def loadConfig():
     config = configparser.ConfigParser()
-    config.read_file(open(r'Config.txt'))
+    config.read_file(open(r'./project/Config.txt'))
     global lonStart
     global lonEnd
     global latStart
@@ -63,7 +63,7 @@ def mergeWithTableList(locationTableName, shockTableName, shockTables, resultTab
             dfMerged = dfMerged[dfMerged.distance < radius]
             
             dfMerged = dfMerged.groupby(by=['name', 'country', 'lat_x', 'lon_x'])['count'].sum().reset_index()
-            dfMerged.to_sql(resultTable, 'sqlite:///./data/processedData.sqlite', if_exists='append', index=False)
+            dfMerged.to_sql(resultTable, 'sqlite:///../data.sqlite', if_exists='append', index=False)
         
 def createResultTableName(mergeType):
     if(mergeType == ALL_DATA):

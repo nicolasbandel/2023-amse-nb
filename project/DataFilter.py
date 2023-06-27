@@ -5,12 +5,12 @@ from sqlalchemy.types import Integer, String, Float
 import configparser 
 import os
 
-shock_url = "./data/shockData.sqlite"
-shock_urlSplitted = 'sqlite:///./data/shockDataSplitted.sqlite'
-location_url = "./data/locationData.sqlite"
-location_urlSplitted = 'sqlite:///./data/locationDataSplitted.sqlite'
-location_deleteUrl = './data/locationDataSplitted.sqlite'
-shock_deleteUrl = './data/shockDataSplitted.sqlite'
+shock_url = "./project/data/shockData.sqlite"
+shock_urlSplitted = 'sqlite:///./project/data/shockDataSplitted.sqlite'
+location_url = "./project/data/locationData.sqlite"
+location_urlSplitted = 'sqlite:///./project/data/locationDataSplitted.sqlite'
+location_deleteUrl = './project/data/locationDataSplitted.sqlite'
+shock_deleteUrl = './project/data/shockDataSplitted.sqlite'
 
 columnTypesShock = {'latitude': Float, 
        'longitude': Float,
@@ -19,7 +19,7 @@ columnTypesShock = {'latitude': Float,
 
 def loadConfig():
     config = configparser.ConfigParser()
-    config.read_file(open(r'Config.txt'))
+    config.read_file(open(r'./project/Config.txt'))
     global lonStart 
     global lonEnd
     global latStart

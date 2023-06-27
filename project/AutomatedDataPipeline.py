@@ -77,7 +77,7 @@ def automatedDataPipline():
         df = df.loc[df['lon'].notnull()]
 
         #save table to sqlite file
-        df.to_sql('shockData', 'sqlite:///./data/shockData.sqlite', if_exists='replace', index=False, dtype=columnTypesShock)
+        df.to_sql('shockData', 'sqlite:///./project/data/shockData.sqlite', if_exists='replace', index=False, dtype=columnTypesShock)
 
         print("Shocks: DONE")
         
@@ -106,7 +106,7 @@ def automatedDataPipline():
         df = df.loc[df['lon'].notnull()]
 
         #save table to sqlite file
-        df.to_sql('location', 'sqlite:///./data/locationData.sqlite', if_exists='replace', index=False, dtype=columnTypesLocation)
+        df.to_sql('location', 'sqlite:///./project/data/locationData.sqlite', if_exists='replace', index=False, dtype=columnTypesLocation)
 
         print("Locations: DONE")
         
