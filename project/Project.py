@@ -1,6 +1,6 @@
 import os
 
-automatedDataPipelinePath = "./project/AutomatedDataPipeline.py"
+automatedDataPipelinePath = "./project/data/AutomatedDataPipeline.py"
 dataFilterPath = "./project/DataFilter.py"
 dataProcessorPath = "./project/DataProcessor.py"
 

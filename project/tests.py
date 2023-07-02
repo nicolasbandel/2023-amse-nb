@@ -5,7 +5,7 @@ import os
 
 filePathLocation = "./project/data/locationData.sqlite"
 filePathShock = "./project/data/shockData.sqlite"
-filePathAutomatedDataPipeline = "./project/AutomatedDataPipeline.py"
+filePathAutomatedDataPipeline = "./project/data/AutomatedDataPipeline.py"
 
 def deleteFile(path):
     if os.path.exists(path):

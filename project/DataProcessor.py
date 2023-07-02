@@ -12,7 +12,7 @@ MOVING_DATA = 2
 
 shock_url = "./project/data/shockDataSplitted.sqlite"
 location_url = "./project/data/locationDataSplitted.sqlite"
-result_url = "../data.sqlite"
+result_url = "./project/data/data.sqlite"
 radius = 1
 
 def loadConfig():
@@ -63,7 +63,7 @@ def mergeWithTableList(locationTableName, shockTableName, shockTables, resultTab
             dfMerged = dfMerged[dfMerged.distance < radius]
             
             dfMerged = dfMerged.groupby(by=['name', 'country', 'lat_x', 'lon_x'])['count'].sum().reset_index()
-            dfMerged.to_sql(resultTable, 'sqlite:///../data.sqlite', if_exists='append', index=False)
+            dfMerged.to_sql(resultTable, 'sqlite:///./project/data/data.sqlite', if_exists='append', index=False)
         
 def createResultTableName(mergeType):
     if(mergeType == ALL_DATA):
@@ -130,6 +130,23 @@ def getAllTables(url):
         if con:
             con.close()
 
+def processTable(table):
+    df = pd.read_sql_table(table, 'sqlite:///project/data/data.sqlite')
+    dfMerged = pd.merge(df, df, on='count')
+    dfMerged['distance'] = dfMerged.apply(lambda row: haversine(row['lon_x_x'], row['lat_x_x'], row['lon_x_y'], row['lat_x_y']), axis=1)     
+    #remove all with a distance smaller than 1000km
+    dfMerged = dfMerged[dfMerged.distance < (radius/2)]
+    #dfMerged.groupby(by={'count'}, )
+    print(dfMerged)
+
+def processResults():
+    dfAll_Full = pd.read_sql_table('resultTable_All', 'sqlite:///project/data/data.sqlite', columns=['name','country','lat_x','lon_x','count'])
+    processTable('resultTable_All')
+    dfStanding_Full = pd.read_sql_table('resultTable_Standing', 'sqlite:///project/data/data.sqlite')
+    dfMoving_Full = pd.read_sql_table('resultTable_Moving', 'sqlite:///project/data/data.sqlite')
+
+    dfAll_Full = dfAll_Full.groupby(by=['name', 'country']).agg({ 'lat_x':'first', 'lon_x':'first','count':'sum'}).reset_index()
+
 def main():
     print("process Data with radius " + str(radius) + ":")
     #delete old files
@@ -148,6 +165,7 @@ def main():
     print("process moving Data:")
     mergeTables(MOVING_DATA)
     print("\rDone!                                                  ")
+    #processResults()
 
 
 if __name__ == "__main__":
