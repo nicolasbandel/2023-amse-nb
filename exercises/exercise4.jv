@@ -1,0 +1,49 @@
+transform CelsiusToFahrenheit {
+  from tempCelsius oftype decimal;
+  to tempFahrenheit oftype decimal;
+
+  tempFahrenheit: (tempCelsius * 9/5) + 32;
+}
+
+pipeline Ex4Pipeline{
+    block DataExtractor oftype HttpExtractor {url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip"; }
+    block ZipArchiveInterpreter oftype ArchiveInterpreter { archiveType: "zip";}
+    block DataFilePicker oftype FilePicker { path: "/data.csv";}
+    block DataTextFileInterpreter oftype TextFileInterpreter {}
+    block DataCSVInterpreter oftype CSVInterpreter {enclosing: '"'; delimiter: ";";}
+    block ColumnDataSelector oftype CellRangeSelector {select: range A1:K*;}
+    block FGHIColumnDeleter oftype ColumnDeleter { delete: [column F,column G,column H,column I]; }
+    block DataTableInterpreter oftype TableInterpreter {
+        header: false;
+        columns: [
+            "Geraet" oftype integer,
+            "Hersteller" oftype text,
+            "Model" oftype text,
+            "Monat" oftype integer,
+            "Temperatur" oftype decimal,
+            "Batterietemperatur" oftype decimal,
+            "Geraet aktiv" oftype text
+        ];
+    }
+    block CelsiusToFahrenheitTransformer oftype TableTransformer {
+        inputColumn: 'temperature';
+        outputColumn: 'temperature';
+        use: CelsiusToFahrenheit;
+    }
+
+       block DatabaseLoader oftype SQLiteLoader { 
+        table: "temperatures"; 
+        file: "temperatures.sqlite"; 
+    }
+
+    DataExtractor
+    ->ZipArchiveInterpreter
+    ->DataFilePicker
+    ->DataTextFileInterpreter
+    ->DataCSVInterpreter
+    ->ColumnDataSelector
+    ->FGHIColumnDeleter
+    ->DataTableInterpreter
+    ->CelsiusToFahrenheitTransformer
+    ->DatabaseLoader;
+}
