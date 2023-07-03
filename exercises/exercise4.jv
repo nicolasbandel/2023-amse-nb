@@ -25,15 +25,21 @@ pipeline Ex4Pipeline{
             "Geraet aktiv" oftype text
         ];
     }
-    block CelsiusToFahrenheitTransformer oftype TableTransformer {
-        inputColumn: 'temperature';
-        outputColumn: 'temperature';
+    block CelsiusToFahrenheitTTransformer oftype TableTransformer {
+        inputColumn: 'Temperatur';
+        outputColumn: 'Temperatur';
+        use: CelsiusToFahrenheit;
+    }
+
+    block CelsiusToFahrenheitBTTransformer oftype TableTransformer {
+        inputColumn: 'Batterietemperatur';
+        outputColumn: 'Batterietemperatur';
         use: CelsiusToFahrenheit;
     }
 
        block DatabaseLoader oftype SQLiteLoader { 
         table: "temperatures"; 
-        file: "temperatures.sqlite"; 
+        file: "./temperatures.sqlite"; 
     }
 
     DataExtractor
@@ -44,6 +50,7 @@ pipeline Ex4Pipeline{
     ->ColumnDataSelector
     ->FGHIColumnDeleter
     ->DataTableInterpreter
-    ->CelsiusToFahrenheitTransformer
+    ->CelsiusToFahrenheitTTransformer
+    ->CelsiusToFahrenheitBTTransformer
     ->DatabaseLoader;
 }
