@@ -4,7 +4,7 @@ This repository contains (a) a data science project that has been developed over
 
 
 ## Project Setup
-The following files are part of the final project: 
+The following files are part of the final project, and are located in the project folder: 
 
 - `data.sqlite`: Is the final filtered and processed dataset. It is created in three steps. First an automated data pipeline will load the data from multiple open data sources. Next a filter removes all data that is not needed. Finally the data is processed to access the results faster. 
 - `exploration.ipynb`: A Jupyter notebook that is used to explore the data from the open data sources. It shows the number of total datasets, unique value and the value ranges of the relevant data.
@@ -23,4 +23,6 @@ Grading Exercise 1
 	Overall points 24 of 24
 Grading Exercise 3
 	Overall points 22 of 22
+Grading Exercise 4
+	Overall points 15 of 15
 ```
